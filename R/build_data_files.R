@@ -12,7 +12,7 @@ build_data_files <- function(path = "."){
   # function for dates
   fun_date <- function(x){
     date_in <- base::readline(base::paste0("enter date ", x,": "))
-    if(base::class(try(assertthat::is.date(base::as.Date(date_in)), silent = TRUE)) == "try-error"){
+    while(base::class(try(assertthat::is.date(base::as.Date(date_in)), silent = TRUE)) == "try-error"){
       print("wrong format. Enter date as following: 2017-01-01")
       date_in <- base::readline(base::paste0("enter date ", x,": "))
     }
@@ -21,7 +21,7 @@ build_data_files <- function(path = "."){
   # function for numeric
   fun_num <- function(x){
     num_in <- base::readline(paste0(x, ": "))
-    if(is.na(suppressWarnings(base::as.numeric(num_in)))){
+    while(is.na(suppressWarnings(base::as.numeric(num_in)))){
       print("wrong format. Enter a numeric value")
       num_in <- base::readline(paste0(x, ": "))
     }
@@ -31,6 +31,20 @@ build_data_files <- function(path = "."){
   empty_as_na <- function(x){
     base::ifelse(base::as.character(x)!="", x, NA)
   }
+
+  # function for epsg code
+  fun_num <- function(){
+    epsg_in <- c("4326", "3035", "25833", "other")[utils::menu(c("4326", "3035", "25833", "other"), title = "choose epsg?")]
+    if(epsg_in %in% "other"){
+      epsg_in <- base::readline("enter epsg code: ")
+      while(is.na(suppressWarnings(base::as.numeric(epsg_in)))){
+        print("wrong format. Enter a numeric value")
+        epsg_in <- base::readline("enter epsg code: ")
+      }
+    }
+    return(epsg_in)
+  }
+
 
   data <- dplyr::tibble(proj_id = base::readline("project id:"),
                         proj_editor = base::readline("project editor:"),
