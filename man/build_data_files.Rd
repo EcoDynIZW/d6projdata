@@ -4,7 +4,10 @@
 \alias{build_data_files}
 \title{create xlsx for the project data.}
 \usage{
-build_data_files()
+build_data_files(path = ".")
+}
+\arguments{
+\item{path}{The path where the data has to be stored}
 }
 \value{
 a tibble where you have to set the parameters by hand.

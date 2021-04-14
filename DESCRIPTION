@@ -17,4 +17,7 @@ Imports:
     dplyr,
     assertthat,
     magrittr,
-    lubridate
+    lubridate,
+    xlsx,
+    base,
+    utils

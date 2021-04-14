@@ -1,4 +1,5 @@
 #' create xlsx for the project data.
+#' @param path The path where the data has to be stored
 #' @return a tibble where you have to set the parameters by hand.
 #' @export
 #' @examples
@@ -7,8 +8,8 @@
 #' }
 
 
-build_data_files <- function(){
-
+build_data_files <- function(path = "."){
+  # function for dates
   fun_date <- function(x){
     date_in <- base::readline(base::paste0("enter date ", x,": "))
     if(base::class(try(assertthat::is.date(base::as.Date(date_in)), silent = TRUE)) == "try-error"){
@@ -17,7 +18,7 @@ build_data_files <- function(){
     }
     return(date_in)
   }
-
+  # function for numeric
   fun_num <- function(x){
     num_in <- base::readline(paste0(x, ": "))
     if(is.na(suppressWarnings(base::as.numeric(num_in)))){
@@ -26,8 +27,13 @@ build_data_files <- function(){
     }
     return(num_in)
   }
+  # function for empty cols
+  empty_as_na <- function(x){
+    base::ifelse(base::as.character(x)!="", x, NA)
+  }
 
   data <- dplyr::tibble(proj_id = base::readline("project id:"),
+                        proj_editor = base::readline("project editor:"),
                         Dep = fun_num("Department"),
                         sup_vis = base::readline("super visor:"),
                         data_name = base::readline("names of data files:"),
@@ -63,11 +69,22 @@ build_data_files <- function(){
                         EPSG_code = fun_num("epsg code"),
                         data_type = base::readline("data type ending:"))
 
-  data2 <- dplyr::mutate(data, proj_name = base::paste(lubridate::year(data_from), species, study_country, study_area, type_of_data, sep = "_"),
-    )
-  data3 <- data2 %>% dplyr::mutate_if(base::nzchar, NA)
+  data2 <- dplyr::mutate(data,
+                         proj_name = base::paste(lubridate::year(data_from),
+                                                 species,
+                                                 study_country,
+                                                 study_area,
+                                                 type_of_data,
+                                                 proj_editor,
+                                                 sep = "_")) %>%
+    dplyr::mutate_each(dplyr::funs(empty_as_na))
 
-  return(data2)
+  if(!base::file.exists(base::paste(path, data2$proj_name, sep = "/"))){ # creates new folder per layer
+    base::dir.create(base::paste(path, data2$proj_name, sep = "/"))
+  }
+
+xlsx::write.xlsx(data2, base::paste0(path, "/", data2$proj_name, "/", data2$proj_name, ".xlsx"),
+                 row.names = FALSE)
 
 }
 
@@ -75,7 +92,7 @@ build_data_files <- function(){
 
 #devtools::install()
 
-
+#d6projdata::build_data_files(path = "C:/Users/wenzler/PopDynIZW Dropbox/Lab_Orga/D6_PopDynTeam/ProjectData/data-raw")
 
 
 
