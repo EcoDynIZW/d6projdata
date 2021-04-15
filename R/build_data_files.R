@@ -33,7 +33,7 @@ build_data_files <- function(path = "."){
   }
 
   # function for epsg code
-  fun_num <- function(){
+  fun_epsg <- function(){
     epsg_in <- c("4326", "3035", "25833", "other")[utils::menu(c("4326", "3035", "25833", "other"), title = "choose epsg?")]
     if(epsg_in %in% "other"){
       epsg_in <- base::readline("enter epsg code: ")
@@ -80,7 +80,7 @@ build_data_files <- function(path = "."){
                         cooperation = base::readline("cooperation:"),
                         data_owner = base::readline("data owner:"),
                         projection = base::readline("projection name:"),
-                        EPSG_code = fun_num("epsg code"),
+                        EPSG_code = fun_epsg(),
                         data_type = base::readline("data type ending:"))
 
   data2 <- dplyr::mutate(data,
