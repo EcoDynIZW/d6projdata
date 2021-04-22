@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xml:lang="de"
+      xmlns="http://www.w3.org/2005/Atom"
+      xmlns:georss="http://www.georss.org/georss">
+
+    <title>Verwaltungskarte Deutschland (Bundesländer, Regierungsbezirke, Kreise)</title>
+    <subtitle>INSPIRE Atom-Feed für Verwaltungskarte Deutschland (Bundesländer, Regierungsbezirke, Kreise)</subtitle>
+
+    <link rel="self" href="http://sg.geodatenzentrum.de/web_download/dtk/vk2500-lrk/vk2500-lrk.atom.xml" type="application/atom+xml" hreflang="de" title="Dieses Dokument"/>
+    <link rel="up" href="http://sg.geodatenzentrum.de/web_download/downloadservice.atom.xml" type="application/atom+xml" hreflang="de" title="Download-Service-Feed"/>
+  
+    
+    <link rel="describedby" href="http://sg.geodatenzentrum.de/web_download/dtk/vk2500-brk/vk2500-brk.pdf" type="application/pdf"/>
+  
+    <id>http://sg.geodatenzentrum.de/web_download/dtk/vk2500-lrk/vk2500-lrk.atom.xml</id>
+  
+    <rights>
+        Die Daten sind urheberrechtlich geschützt. Der Datensatz wird entgeltfrei mit der Datenlizenz Deutschland –
+        Namensnennung – Version 2.0 (https://www.govdata.de/dl-de/by-2-0) zur Verfügung gestellt. Der Quellenvermerk
+        ist zu beachten. | Quellenvermerk: &amp;copy; Bundesamt für Kartographie und Geodäsie &lt;Jahr&gt;
+    </rights>
+    <updated>2019-08-06T15:40:12+02:00</updated>
+    <author>
+        <name>Dienstleistungszentrum des Bundes für Geoinformation und Geodäsie</name>
+        <email>dlz@bkg.bund.de</email>
+        <uri>http://www.geodatenzentrum.de</uri>
+    </author>
+        
+    <entry>
+        <title>Verwaltungskarte Deutschland (Bundesländer, Regierungsbezirke, Kreise) als PDF-File in CRS EPSG:0</title>
+        <link rel="alternate" href="http://sg.geodatenzentrum.de/web_download/dtk/vk2500-lrk/ee/pdf/vk2500-lrk.ee.pdf.zip" type="application/zip" hreflang="de" 
+              length="3733748" title="Verwaltungskarte Deutschland (Bundesländer, Regierungsbezirke, Kreise) als PDF-File in CRS EPSG:0"/>
+        <id>http://sg.geodatenzentrum.de/web_download/dtk/vk2500-lrk/ee/pdf/vk2500-lrk.ee.pdf.zip</id>
+        <updated>2019-08-06T15:38:37+02:00</updated>
+        <category term="http://www.opengis.net/def/crs/EPSG/0/0" label="n.a." scheme="http://www.opengis.net/def/crs/"/>
+    </entry>
+</feed>
