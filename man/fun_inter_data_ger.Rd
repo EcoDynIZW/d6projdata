@@ -4,7 +4,7 @@
 \alias{fun_inter_data_ger}
 \title{dintersect point data with one of the germany shapefiles}
 \usage{
-fun_inter_data_ger(pts_data)
+fun_inter_data_ger(pts_data, germany_sf)
 }
 \arguments{
 \item{pts_data}{the point data}

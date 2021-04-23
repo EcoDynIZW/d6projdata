@@ -16,11 +16,12 @@ auto_plot <- function(data_sf,
                       add_germany = FALSE){
 
   data_sf <- data_sf
+  germany_sf <- fun_dl_ger_bor()
 
   if(add_germany == TRUE){
     ggplot2::ggplot() +
-      geom_sf(data = fun_dl_ger_bor()) +
-      geom_sf(data = fun_inter_data_ger(pts_data = data_sf)) +
+      geom_sf(data = germany_sf) +
+      geom_sf(data = fun_inter_data_ger(pts_data = data_sf, germany_sf = germany_sf)) +
       geom_sf(data = data_sf,
               size = 2, shape = 18) +
       guides(color = guide_legend(
@@ -33,7 +34,7 @@ auto_plot <- function(data_sf,
         legend.direction = "horizontal")
   } else{
   ggplot2::ggplot() +
-    geom_sf(data = fun_inter_data_ger(pts_data = data_sf)) +
+    geom_sf(data = fun_inter_data_ger(pts_data = data_sf, germany_sf = germany_sf)) +
     geom_sf(data = data_sf,
           size = 2, shape = 18) +
     guides(color = guide_legend(
@@ -100,9 +101,9 @@ return(germany_sf)
 #' fun_inter_data_ger()
 #' }
 
-fun_inter_data_ger <- function(pts_data){
+fun_inter_data_ger <- function(pts_data, germany_sf){
   data_pts <- pts_data
-  data_ger <- fun_dl_ger_bor()
+  data_ger <- germany_sf
   inter <- base::data.frame(inter = base::do.call(base::rbind,
                                                   base::lapply(sf::st_intersects(data_ger,
                                                                                  data_pts %>%
