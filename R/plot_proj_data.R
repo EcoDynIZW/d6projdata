@@ -2,6 +2,7 @@
 #' @param data_sf the data that has to be plotted
 #' @param out_path path where the plot has to be stored
 #' @param out_name name of the plot
+#' @param add_germany  A Boolean. If TRUE a germany map is added to the map
 #' @return save the data to the original location
 #' @export
 #' @examples
@@ -9,26 +10,41 @@
 #'
 #' }
 
-auto_plot <- function(data_sf, out_path, out_name){
+auto_plot <- function(data_sf,
+                      out_path,
+                      out_name,
+                      add_germany = FALSE){
 
   data_sf <- data_sf
+
+  if(add_germany == TRUE){
+    ggplot2::ggplot() +
+      geom_sf(data = germany_sf) +
+      geom_sf(data = fun_inter_data_ger(pts_data = data_sf)) +
+      geom_sf(data = data_sf,
+              size = 2, shape = 18) +
+      guides(color = guide_legend(
+        direction = "horizontal",
+        title.position = "top",
+        title.hjust = .5)) +
+      theme(
+        legend.position="bottom",
+        legend.box = "vertical",
+        legend.direction = "horizontal")
+  } else{
   ggplot2::ggplot() +
     geom_sf(data = fun_inter_data_ger(pts_data = data_sf)) +
-  geom_sf(data = data_sf,
+    geom_sf(data = data_sf,
           size = 2, shape = 18) +
-    # scale_color_brewer(palette = "PuOr",
-    #                    name = "ID_new2",
-    #                    na.value = "grey60") +
-    guides(color = guide_legend(#title = "Boar ID",
+    guides(color = guide_legend(
       direction = "horizontal",
       title.position = "top",
       title.hjust = .5)) +
-    theme(#legend.title = element_text("Species", colour = "Black"),
-      #legend.position = c(0.8, 0.0),
+    theme(
       legend.position="bottom",
       legend.box = "vertical",
       legend.direction = "horizontal")
-
+  }
 
   ggsave(here(out_path, paste0(out_name,".pdf")), plot = last_plot(), device = "pdf",
          width = 20, height = 20, units = "cm")

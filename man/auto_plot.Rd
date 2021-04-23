@@ -4,7 +4,7 @@
 \alias{auto_plot}
 \title{automatic plots for the projdata}
 \usage{
-auto_plot(data_sf, out_path, out_name)
+auto_plot(data_sf, out_path, out_name, add_germany = FALSE)
 }
 \arguments{
 \item{data_sf}{the data that has to be plotted}
@@ -12,6 +12,8 @@ auto_plot(data_sf, out_path, out_name)
 \item{out_path}{path where the plot has to be stored}
 
 \item{out_name}{name of the plot}
+
+\item{add_germany}{A Boolean. If TRUE a germany map is added to the map}
 }
 \value{
 save the data to the original location
