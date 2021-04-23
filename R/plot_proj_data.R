@@ -20,7 +20,7 @@ auto_plot <- function(data_sf,
 
   if(add_germany == TRUE){
     ggplot2::ggplot() +
-      geom_sf(data = germany_sf, col = NA) +
+      geom_sf(data = germany_sf, fill = NA) +
       geom_sf(data = fun_inter_data_ger(pts_data = data_sf, germany_sf = germany_sf)) +
       geom_sf(data = data_sf,
               size = 2, shape = 18) +
