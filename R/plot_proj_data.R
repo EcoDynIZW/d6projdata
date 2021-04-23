@@ -19,7 +19,7 @@ auto_plot <- function(data_sf,
 
   if(add_germany == TRUE){
     ggplot2::ggplot() +
-      geom_sf(data = germany_sf) +
+      geom_sf(data = fun_dl_ger_bor()) +
       geom_sf(data = fun_inter_data_ger(pts_data = data_sf)) +
       geom_sf(data = data_sf,
               size = 2, shape = 18) +
