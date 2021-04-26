@@ -24,6 +24,7 @@ auto_plot <- function(data_sf,
       geom_sf(data = fun_inter_data_ger(pts_data = data_sf, germany_sf = germany_sf)) +
       geom_sf(data = data_sf,
               size = 2, shape = 18) +
+      text(germany_sf$x_cent, germany_sf$y_cent, data$NUTS_NAME, cex=.9, col="#69b3a2") +
       guides(color = guide_legend(
         direction = "horizontal",
         title.position = "top",
@@ -86,7 +87,9 @@ germany_sf <- sf::st_read(base::list.files(shp_path,
                                            recursive = TRUE,
                                            pattern = ".shp")[1]) %>%
   dplyr::select(base::ifelse(chooser == "states", "NUTS_NAME", "GEN")) %>%
-  sf::st_transform(4326)
+  sf::st_transform(4326) %>%
+  dplyr::mutate(x_cent = sf::st_coordinates(sf::st_centroid(.))[,1],
+                y_cent = sf::st_coordinates(sf::st_centroid(.))[,2])
 
 return(germany_sf)
 }
