@@ -21,10 +21,10 @@ auto_plot <- function(data_sf,
   if(add_germany == TRUE){
     ggplot2::ggplot() +
       geom_sf(data = germany_sf, fill = NA) +
+      text(germany_sf$x_cent, germany_sf$y_cent, data$NUTS_NAME, cex=.9, col="#69b3a2") +
       geom_sf(data = fun_inter_data_ger(pts_data = data_sf, germany_sf = germany_sf)) +
       geom_sf(data = data_sf,
               size = 2, shape = 18) +
-      text(germany_sf$x_cent, germany_sf$y_cent, data$NUTS_NAME, cex=.9, col="#69b3a2") +
       guides(color = guide_legend(
         direction = "horizontal",
         title.position = "top",
