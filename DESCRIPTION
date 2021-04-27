@@ -7,8 +7,7 @@ Authors@R:
            role = c("aut", "cre"),
            email = "wenzler@izw-berlin.de")
 Description: helps me to organize the project data fo the d6 department.
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
