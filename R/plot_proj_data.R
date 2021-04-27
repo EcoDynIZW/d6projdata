@@ -10,7 +10,7 @@
 #'
 #' }
 
-auto_plot <- function(data_sf,
+plot_proj_data <- function(data_sf,
                       out_path,
                       out_name,
                       add_germany = FALSE){
