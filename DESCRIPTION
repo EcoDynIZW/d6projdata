@@ -25,4 +25,5 @@ Imports:
     here,
     gt,
     glue,
-    tidyr
+    tidyr,
+    flextable

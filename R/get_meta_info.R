@@ -24,13 +24,15 @@ get_meta_info <- function(path){
                                    "type_of_measure", "no_spec", "no_ind",
                                    "publication", "publication_doi"),
                           names_to = "column", values_to = "input") %>%
-      gt::gt() %>%
-      gt::tab_header(
-        title = paste0(data$species, " ", data$proj_editor)
-      ) %>%
-      gt::fmt_passthrough(
-        columns = c("column", "input")
-        )
+
+      flextable::flextable() %>% flextable::autofit()
+      # gt::gt() %>%
+      # gt::tab_header(
+      #   title = paste0(data$species, " ", data$proj_editor)
+      # ) %>%
+      # gt::fmt_passthrough(
+      #   columns = c("column", "input")
+      #   )
   #   sheetIndex = 1)
   # text <- base::paste0("\n  Project ID          : ", data$proj_id, "\n",
   #                "    Project Editor      : ", data$proj_editor, "\n",
