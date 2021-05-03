@@ -22,4 +22,7 @@ Imports:
     utils,
     ggplot2,
     sf,
-    here
+    here,
+    gt,
+    glue,
+    tidyr

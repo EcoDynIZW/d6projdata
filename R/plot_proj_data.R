@@ -22,27 +22,27 @@ plot_proj_data <- function(data_sf,
     p1 <- ggplot2::ggplot() +
       geom_sf(data = germany_sf, fill = NA) +
       #text(germany_sf$x_cent, germany_sf$y_cent, data$NUTS_NAME, cex=.9, col="#69b3a2") +
-      geom_sf(data = fun_inter_data_ger(pts_data = data_sf, germany_sf = germany_sf)) +
-      geom_sf(data = data_sf,
+      ggplot2::geom_sf(data = fun_inter_data_ger(pts_data = data_sf, germany_sf = germany_sf)) +
+      ggplot2::geom_sf(data = data_sf,
               size = 2, shape = 18) +
-      guides(color = guide_legend(
+      ggplot2::guides(color = ggplot2::guide_legend(
         direction = "horizontal",
         title.position = "top",
         title.hjust = .5)) +
-      theme(
+      ggplot2::theme(
         legend.position="bottom",
         legend.box = "vertical",
         legend.direction = "horizontal")
   } else{
   p1 <- ggplot2::ggplot() +
-    geom_sf(data = fun_inter_data_ger(pts_data = data_sf, germany_sf = germany_sf)) +
-    geom_sf(data = data_sf,
+    ggplot2::geom_sf(data = fun_inter_data_ger(pts_data = data_sf, germany_sf = germany_sf)) +
+    ggplot2::geom_sf(data = data_sf,
           size = 2, shape = 18) +
-    guides(color = guide_legend(
+    ggplot2::guides(color = ggplot2::guide_legend(
       direction = "horizontal",
       title.position = "top",
       title.hjust = .5)) +
-    theme(
+    vtheme(
       legend.position="bottom",
       legend.box = "vertical",
       legend.direction = "horizontal")
