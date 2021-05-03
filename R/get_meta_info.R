@@ -12,7 +12,7 @@
 get_meta_info <- function(path){
   data <- xlsx::read.xlsx(
     base::list.files(path,
-               pattern = ".xlsx",
+               pattern = "project_data_",
                full.names = TRUE), sheetIndex = 1)
     text <- data %>%
       dplyr::select(proj_id, proj_editor, Dep, sup_vis, species,
