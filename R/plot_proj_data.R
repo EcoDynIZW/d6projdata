@@ -37,12 +37,12 @@ plot_proj_data <- function(data_sf,
   p1 <- ggplot2::ggplot() +
     ggplot2::geom_sf(data = fun_inter_data_ger(pts_data = data_sf, germany_sf = germany_sf)) +
     ggplot2::geom_sf(data = data_sf,
-          size = 2, shape = 18) +
+                     size = 2, shape = 18) +
     ggplot2::guides(color = ggplot2::guide_legend(
       direction = "horizontal",
       title.position = "top",
       title.hjust = .5)) +
-    vtheme(
+    ggplot2::theme(
       legend.position="bottom",
       legend.box = "vertical",
       legend.direction = "horizontal")
