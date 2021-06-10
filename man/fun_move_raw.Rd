@@ -4,10 +4,12 @@
 \alias{fun_move_raw}
 \title{move raw data from any directoy to the _archive folder.}
 \usage{
-fun_move_raw(taxon_col)
+fun_move_raw(taxon_col, data_path)
 }
 \arguments{
 \item{taxon_col}{column of the taxon name}
+
+\item{data_path}{path to the raw data}
 }
 \description{
 move raw data from any directoy to the _archive folder.

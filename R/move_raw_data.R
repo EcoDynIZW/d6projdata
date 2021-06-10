@@ -1,12 +1,13 @@
 #' move raw data from any directoy to the _archive folder.
 #' @param taxon_col column of the taxon name
+#' @param data_path path to the raw data
 #' @export
 #' @examples
 #' \dontrun{
 #' fun_move_raw(taxon_col = "taxon_col")
 #' }
 
-fun_move_raw <- function(taxon_col){
+fun_move_raw <- function(taxon_col, data_path){
 
   stud_spec <- base::gsub(pattern = " ",
                     replacement = "_",
