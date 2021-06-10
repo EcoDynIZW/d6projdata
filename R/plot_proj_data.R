@@ -60,7 +60,6 @@ plot_proj_data <- function(data_sf,
 
 #' download data from the bkg database
 #' @return a shapefile of germany
-#' @export
 #' @examples
 #' \dontrun{
 #' fun_dl_ger_bor()
@@ -99,7 +98,6 @@ return(germany_sf)
 #' dintersect point data with one of the germany shapefiles
 #' @return a shapefile with part of germany
 #' @param pts_data the point data
-#' @export
 #' @examples
 #' \dontrun{
 #' fun_inter_data_ger()
