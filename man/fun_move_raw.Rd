@@ -9,7 +9,7 @@ fun_move_raw(taxon_col, data_path)
 \arguments{
 \item{taxon_col}{column of the taxon name}
 
-\item{data_path}{path to the raw data}
+\item{data_path}{complete path to the raw data with the file itself}
 }
 \description{
 move raw data from any directoy to the _archive folder.

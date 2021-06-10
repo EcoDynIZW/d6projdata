@@ -1,6 +1,6 @@
 #' move raw data from any directoy to the _archive folder.
 #' @param taxon_col column of the taxon name
-#' @param data_path path to the raw data
+#' @param data_path complete path to the raw data with the file itself
 #' @export
 #' @examples
 #' \dontrun{
