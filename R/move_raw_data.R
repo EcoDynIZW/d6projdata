@@ -4,29 +4,29 @@
 #' @export
 #' @examples
 #' \dontrun{
-#' fun_move_raw(taxon_col = "taxon_col")
+#' fun_move_raw(taxon_col = "taxon_col", data_path = "path")
 #' }
 
 fun_move_raw <- function(taxon_col, data_path){
 
   stud_spec <- base::gsub(pattern = " ",
                     replacement = "_",
-                    x = tolower(taxon_col))
+                    x = base::tolower(taxon_col))
 
   dir <- here::here("data-raw",
                     base::list.files(path = here::here("data-raw"),
                          pattern = stud_spec))
 
-  if (!base::dir.exists(base::paste0(dir, "/_archive")))
-    base::dir.create(base::paste0(dir, "/_archive"),
+  if (!base::dir.exists(paths = base::paste0(dir, "/_archive")))
+    base::dir.create(path = base::paste0(dir, "/_archive"),
                      showWarnings = TRUE,
                      recursive = TRUE)
 
-  base::file.copy(data_path,
-                  base::paste0(dir, "/_archive"))
+  base::file.copy(from = data_path,
+                  to = base::paste0(dir, "/_archive"))
 
 }
 
 #devtools::install()
 
-#dat <- d6projdata::fun_move_raw(path = "C:/Users/wenzler/PopDynIZW Dropbox/Lab_Orga/D6_PopDynTeam/ProjectData/data-raw/2008_vulpes_vulpes_de_b_individual_gras/2008_vulpes_vulpes_de_b_individual_gras.xlsx")
+#d6projdata::fun_move_raw(taxon_col = "test test", data_path = "C:/Users/wenzler/Desktop")

@@ -16,6 +16,6 @@ move raw data from any directoy to the _archive folder.
 }
 \examples{
 \dontrun{
-fun_move_raw(taxon_col = "taxon_col")
+fun_move_raw(taxon_col = "taxon_col", data_path = "path")
 }
 }
