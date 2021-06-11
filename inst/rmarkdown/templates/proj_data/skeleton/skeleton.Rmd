@@ -2,6 +2,8 @@
 title: "Your Project: Data Preparation" ## name of your project
 author: "Your Name"                     ## your name(s)
 date: "`r Sys.Date()`"                  ## current date
+description: |
+    The aim of this script is to create a project dat file and to copy the raw data to the _archive
 output:
   html_document:
     theme: journal
