@@ -110,7 +110,7 @@ build_data_files <- function(path = "."){
 
 xlsx::write.xlsx(data, base::paste0(path, "/", data$proj_name, "/", data$proj_name, ".xlsx"),
                  row.names = FALSE)
-
+return(data)
 }
 
 #test <- d6projdata::build_data_files()
