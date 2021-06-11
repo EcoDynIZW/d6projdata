@@ -17,7 +17,3 @@ change_cols <- function(path){
   }
   return(data)
 }
-
-#devtools::install()
-
-#dat <- d6projdata::change_cols(path = "C:/Users/wenzler/PopDynIZW Dropbox/Lab_Orga/D6_PopDynTeam/ProjectData/data-raw/2008_vulpes_vulpes_de_b_individual_gras/2008_vulpes_vulpes_de_b_individual_gras.xlsx")

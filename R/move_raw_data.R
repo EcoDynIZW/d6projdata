@@ -26,7 +26,3 @@ fun_move_raw <- function(taxon_col, data_path){
                   to = base::paste0(dir, "/_archive"))
 
 }
-
-#devtools::install()
-
-#d6projdata::fun_move_raw(taxon_col = "test test", data_path = "C:/Users/wenzler/Desktop")

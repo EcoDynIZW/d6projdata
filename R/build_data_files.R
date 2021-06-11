@@ -113,13 +113,6 @@ xlsx::write.xlsx(data, base::paste0(path, "/", data$proj_name, "/", data$proj_na
 return(data)
 }
 
-#test <- d6projdata::build_data_files()
-
-#devtools::install()
-
-#d6projdata::build_data_files(path = "C:/Users/wenzler/PopDynIZW Dropbox/Lab_Orga/D6_PopDynTeam/ProjectData/data-raw")
-
-
 #' function for dates
 #' @param x input
 #' @return returns a date
