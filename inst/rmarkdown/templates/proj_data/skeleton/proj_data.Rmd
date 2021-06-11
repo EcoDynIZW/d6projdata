@@ -1,0 +1,94 @@
+---
+title: "Your Project: Data Preparation" ## name of your project
+author: "Your Name"                     ## your name(s)
+date: "`r Sys.Date()`"                  ## current date
+output:
+  html_document:
+    theme: journal
+    highlight: kate
+    toc_depth: 2
+    toc_float: true
+    number_sections: true
+---
+
+```{r setup, include=FALSE}
+## You can ignore this chunk in most cases
+## If you want to modify chunk options, you can do it here for all chunks or
+## add the options in the repsective chunk header, e.g. `{r, message = FALSE}`
+knitr::opts_chunk$set(echo = TRUE, warning = TRUE, message = TRUE,
+                      fig.width = 9, fig.height = 6, dpi = 500, 
+                      retina = 1, fig.showtext = TRUE)
+```
+
+# Setup
+
+```{r packages}
+#devtools::install_github("EcoDynIZW/d6projdata")
+
+sapply(list("sf", "tidyverse", "raster", "here", "ggplot2", "patchwork", "d6projdata", "mapview"), 
+       library, character.only = TRUE, logical.return = TRUE)
+```
+
+
+# Data
+
+```{r data}
+data_path <- here("data-raw")
+
+data <- read.csv(data_path)
+
+names(data)
+nrow(data)
+
+head(data, 10)
+#min(data$timestamp)
+#max(data$timestamp)
+
+data_sf <- data %>% 
+  drop_na("location.long") %>% 
+  st_as_sf(coords = c("location.long", "location.lat"), # maybe change to other geo columns 
+           crs = 4326, # same for the crs
+           sf_column_name = "geometry",
+           remove  = FALSE)
+
+mapview(data_sf[1,])
+```
+
+# create proj data file
+
+```{r}
+proj_data <- d6projdata::build_data_files(path = "data-raw")
+```
+
+# move data
+
+```{r}
+d6projdata::fun_move_raw(taxon_col = data$individual.taxon.canonical.name[1], # maybe change to another column or type by hand
+                         data_path = data_path)
+```
+
+# plot data
+
+```{r}
+d6projdata::plot_proj_data(data_sf = data_sf,
+                           out_path = here("plots"),
+                           out_name = list.files(here::here("data-raw"),
+                                                pattern = proj_data$species
+                                                ))
+```
+
+
+***
+
+<details><summary>Session Info</summary>
+
+```{r sessionInfo}
+## DO NOT REMOVE!
+## We store the settings of your computer and the current versions of the
+## packages used to allow for reproducibility
+Sys.time()
+#git2r::repository() ## uncomment if you are using GitHub
+sessionInfo()
+```
+
+</details>
