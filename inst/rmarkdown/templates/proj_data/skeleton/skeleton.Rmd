@@ -27,7 +27,7 @@ knitr::opts_chunk$set(echo = TRUE, warning = TRUE, message = TRUE,
 ```{r packages}
 #devtools::install_github("EcoDynIZW/d6projdata")
 
-sapply(list("sf", "tidyverse", "raster", "here", "ggplot2", "patchwork", "d6projdata", "mapview"), 
+sapply(list("sf", "tidyverse", "raster", "here", "ggplot2", "patchwork", "d6projdata", "mapview", "cowplot"), 
        library, character.only = TRUE, logical.return = TRUE)
 ```
 
@@ -66,17 +66,55 @@ proj_data <- d6projdata::build_data_files(path = "data-raw")
 
 ```{r}
 d6projdata::fun_move_raw(taxon_col = data$individual.taxon.canonical.name[1], # maybe change to another column or type by hand
-                         data_path = data_path)
+                         data_path = list.files(paste0(data_path), pattern = "", # insert a pattern
+                                                recursive = TRUE, 
+                                                full.names = TRUE)[[1]])
 ```
 
 # plot data
 
 ```{r}
-d6projdata::plot_proj_data(data_sf = data_sf,
-                           out_path = here("plots"),
-                           out_name = list.files(here::here("data-raw"),
-                                                pattern = proj_data$species
-                                                ))
+ger <- plot_proj_data(data_sf = data_sf, 
+          out_path = here("data-raw", proj_data$proj_name),
+          out_name = proj_data$proj_name,
+          add_germany = FALSE)
+
+text <- get_meta_info(here("data-raw", proj_data$proj_name))
+
+text_plot <- ggplot() + 
+  theme_void() + 
+  annotation_custom(
+grid::rasterGrob(text %>% flextable::as_raster()), xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf)
+
+title <- ggdraw() + 
+  draw_label(
+    paste(proj_data$proj_editor, proj_data$species, " "),
+    fontface = 'bold',
+    x = 0,
+    hjust = 0
+  ) +
+  theme(
+    # add margin on the left of the drawing canvas,
+    # so title is aligned with left edge of first plot
+    plot.margin = margin(0, 0, -180, 7)
+  )
+
+
+
+plot_grid(
+  title, cowplot::plot_grid(ger, text_plot, 
+                   nrow = 1, ncol = 2, 
+                   rel_heights = c(1, 1) ),
+  ncol = 1,
+  # rel_heights values control vertical title margins
+  rel_heights = c(0.1, 1)
+)
+
+ggsave(here("data-raw", 
+            proj_data$proj_name,
+            paste0("plot_", proj_data$proj_name, ".pdf")), 
+       plot = last_plot(), device = "pdf",
+       width = 20, height = 20, units = "cm")
 ```
 
 
