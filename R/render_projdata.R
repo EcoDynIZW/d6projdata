@@ -1,5 +1,8 @@
 #' function for rendering an markdown to get an html of the project data
 #' @param path The path where the data has to be stored
+#' @param data_name The name of the data
+#' @param data_sf sf object
+#' @param proj_data meta data file
 #' @return a tibble where you have to set the parameters by hand.
 #' @export
 #' @examples
