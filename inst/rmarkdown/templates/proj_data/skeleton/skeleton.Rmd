@@ -33,6 +33,8 @@ sapply(list("sf", "tidyverse", "raster", "here", "ggplot2", "patchwork", "d6proj
 # Data
 
 ```{r data}
+data_name <- d6projdata::proj_data_name()
+
 data <- st_read(list.files(here::here("data-raw", ""), pattern = ".$", recursive = TRUE, full.names = TRUE)[[1]]) %>% 
   
 names(data)

@@ -108,7 +108,7 @@ build_data_files <- function(path = "."){
     base::dir.create(base::paste(path, data$proj_name, sep = "/"))
   }
 
-xlsx::write.xlsx(data, base::paste0(path, "/meta_data_", data$proj_name, "/", data$proj_name, ".xlsx"),
+xlsx::write.xlsx(data, here::here("data-raw", data$proj_name, paste0("meta_data_", data$proj_name, ".xlsx")),
                  row.names = FALSE)
 return(data)
 }
