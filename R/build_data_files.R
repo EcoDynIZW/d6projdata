@@ -8,7 +8,7 @@
 #' }
 
 
-build_data_files <- function(path = "."){
+build_data_files <- function(path){
 
   data <- dplyr::tibble(proj_id = NA,
                         proj_editor = NA,
@@ -104,9 +104,6 @@ build_data_files <- function(path = "."){
   doit <- c("Yes", "No")[utils::menu(c("Yes", "No"), title = "Do you want to change something?")]
   }
 
-  if(!base::file.exists(base::paste(path, data$proj_name, sep = "/"))){ # creates new folder per layer
-    base::dir.create(base::paste(path, data$proj_name, sep = "/"))
-  }
 
 xlsx::write.xlsx(data, here::here("data-raw", data$proj_name, paste0("meta_data_", data$proj_name, ".xlsx")),
                  row.names = FALSE)
