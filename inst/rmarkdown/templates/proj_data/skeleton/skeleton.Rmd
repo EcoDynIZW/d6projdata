@@ -2,8 +2,7 @@
 title: "Your Project: Data Preparation" ## name of your project
 author: "Your Name"                     ## your name(s)
 date: "`r Sys.Date()`"                  ## current date
-description: |
-    The aim of this script is to create a project dat file and to copy the raw data to the _archive
+
 output:
   html_document:
     theme: journal
@@ -31,14 +30,11 @@ sapply(list("sf", "tidyverse", "raster", "here", "ggplot2", "patchwork", "d6proj
        library, character.only = TRUE, logical.return = TRUE)
 ```
 
-
 # Data
 
 ```{r data}
-data_path <- here("data-raw")
-
-data <- read.csv(data_path)
-
+data <- st_read(list.files(here::here("data-raw", ""), pattern = ".$", recursive = TRUE, full.names = TRUE)[[1]]) %>% 
+  
 names(data)
 nrow(data)
 
@@ -46,89 +42,34 @@ head(data, 10)
 #min(data$timestamp)
 #max(data$timestamp)
 
-data_sf <- data %>% 
-  drop_na("location.long") %>% 
-  st_as_sf(coords = c("location.long", "location.lat"), # maybe change to other geo columns 
-           crs = 4326, # same for the crs
-           sf_column_name = "geometry",
-           remove  = FALSE)
-
-mapview(data_sf[1,])
+mapview(data[1,])
 ```
 
 # create proj data file
 
 ```{r}
 proj_data <- d6projdata::build_data_files(path = "data-raw")
+# proj_data <- readxl::read_xlsx(here::here("data-raw", ""))
 ```
 
 # move data
 
 ```{r}
-d6projdata::fun_move_raw(taxon_col = data$individual.taxon.canonical.name[1], # maybe change to another column or type by hand
-                         data_path = list.files(paste0(data_path), pattern = "", # insert a pattern
-                                                recursive = TRUE, 
-                                                full.names = TRUE)[[1]])
+d6projdata::fun_move_raw(taxon_col = "", # maybe change to another column or type by hand
+                         data_path = list.files(here::here("data-raw", ""), pattern = ".$", recursive = TRUE, full.names = TRUE)[[1]])
 ```
 
-# plot data
+# save data
 
 ```{r}
-ger <- plot_proj_data(data_sf = data_sf, 
-          out_path = here("data-raw", proj_data$proj_name),
-          out_name = proj_data$proj_name,
-          add_germany = FALSE)
-
-text <- get_meta_info(here("data-raw", proj_data$proj_name))
-
-text_plot <- ggplot() + 
-  theme_void() + 
-  annotation_custom(
-grid::rasterGrob(text %>% flextable::as_raster()), xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf)
-
-title <- ggdraw() + 
-  draw_label(
-    paste(proj_data$proj_editor, proj_data$species, " "),
-    fontface = 'bold',
-    x = 0,
-    hjust = 0
-  ) +
-  theme(
-    # add margin on the left of the drawing canvas,
-    # so title is aligned with left edge of first plot
-    plot.margin = margin(0, 0, -180, 7)
-  )
-
-
-
-plot_grid(
-  title, cowplot::plot_grid(ger, text_plot, 
-                   nrow = 1, ncol = 2, 
-                   rel_heights = c(1, 1) ),
-  ncol = 1,
-  # rel_heights values control vertical title margins
-  rel_heights = c(0.1, 1)
-)
-
-ggsave(here("data-raw", 
-            proj_data$proj_name,
-            paste0("plot_", proj_data$proj_name, ".pdf")), 
-       plot = last_plot(), device = "pdf",
-       width = 20, height = 20, units = "cm")
+st_write(data, here::here("data-raw", data_name, paste0(data_name, ".gpkg")))
 ```
 
+# render data
 
-***
-
-<details><summary>Session Info</summary>
-
-```{r sessionInfo}
-## DO NOT REMOVE!
-## We store the settings of your computer and the current versions of the
-## packages used to allow for reproducibility
-Sys.time()
-#git2r::repository() ## uncomment if you are using GitHub
-sessionInfo()
+```{r}
+d6projdata:::render_projdata(path = here::here("data-raw", data_name),
+                data_name = data_name,
+                data_sf = data,
+                proj_data = proj_data)
 ```
-
-</details>
