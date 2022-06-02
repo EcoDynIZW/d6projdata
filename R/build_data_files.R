@@ -12,6 +12,7 @@
 build_data_files <- function(path, data_name){
 
   data <- dplyr::tibble(proj_id = NA,
+                        proj_name = NA,
                         proj_editor = NA,
                         Dep = NA,
                         sup_vis = NA,
