@@ -1,5 +1,4 @@
 #' create xlsx for the project data.
-#' @param path The path where the data has to be stored
 #' @param data_name the name of the project
 #' @return a tibble where you have to set the parameters by hand.
 #' @export
@@ -9,7 +8,7 @@
 #' }
 
 
-build_data_files <- function(path, data_name){
+build_data_files <- function(data_name){
 
   data <- dplyr::tibble(proj_id = NA,
                         proj_name = NA,
@@ -100,8 +99,8 @@ build_data_files <- function(path, data_name){
   }
 
 
-xlsx::write.xlsx(data, here::here("data-raw", data$proj_name, paste0("meta_data_", data$proj_name, ".xlsx")),
-                 row.names = FALSE)
+openxlsx::write.xlsx(x = data, file = here::here("data-raw", data$proj_name, paste0("meta_data_", data$proj_name, ".xlsx")),
+                     overwrite = TRUE)
 return(data)
 }
 
