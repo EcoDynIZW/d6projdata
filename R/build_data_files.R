@@ -1,5 +1,6 @@
 #' create xlsx for the project data.
 #' @param path The path where the data has to be stored
+#' @param data_name the name of the project
 #' @return a tibble where you have to set the parameters by hand.
 #' @export
 #' @examples
@@ -8,7 +9,7 @@
 #' }
 
 
-build_data_files <- function(path){
+build_data_files <- function(path, data_name){
 
   data <- dplyr::tibble(proj_id = NA,
                         proj_editor = NA,
@@ -53,6 +54,7 @@ build_data_files <- function(path){
 
     data <- data %>%
       dplyr::mutate(
+        proj_name = data_name,
         proj_id = ifelse(is.na(data$proj_id), base::readline("project id:"), data$proj_id),
         proj_editor = ifelse(is.na(data$proj_editor), base::readline("project editor:"), data$proj_editor),
         Dep = ifelse(is.na(data$Dep), fun_num("Department"), data$Dep),
@@ -92,14 +94,6 @@ build_data_files <- function(path){
       ) %>%
       dplyr::mutate_each(dplyr::funs(empty_as_na))
 
-  data <- dplyr::mutate(data,
-                         proj_name = base::paste(lubridate::year(data_from),
-                                                 species,
-                                                 study_country,
-                                                 study_area,
-                                                 type_of_data,
-                                                 proj_editor,
-                                                 sep = "_"))
 
   doit <- c("Yes", "No")[utils::menu(c("Yes", "No"), title = "Do you want to change something?")]
   }

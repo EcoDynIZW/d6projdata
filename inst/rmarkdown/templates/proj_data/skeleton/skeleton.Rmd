@@ -35,6 +35,10 @@ sapply(list("sf", "tidyverse", "raster", "here", "ggplot2", "patchwork", "d6proj
 ```{r data}
 data_name <- d6projdata::proj_data_name()
 
+if(!base::file.exists(here::here("data-raw", data_name))){ # creates new folder per layer
+    base::dir.create(here::here("data-raw", data_name))
+  }
+
 data <- st_read(list.files(here::here("data-raw", ""), pattern = ".$", recursive = TRUE, full.names = TRUE)[[1]]) %>% 
   
 names(data)
