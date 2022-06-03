@@ -8,7 +8,7 @@
 #' }
 
 
-build_data_files <- function(data_name){
+build_data_files <- function(data_name, data_sf){
 
   data <- dplyr::tibble(proj_id = NA,
                         proj_name = NA,
@@ -17,20 +17,22 @@ build_data_files <- function(data_name){
                         sup_vis = NA,
                         data_file_name = NA,
                         data_name_archive = NA,
+                        species = NA,
+                        study_country = NA,
+                        study_area = NA,
+                        EPSG_code = NA,
+                        projection = NA,
+                        data_from = NA,
+                        data_to = NA,
                         edited_unique_identifier = NA,
                         original_unique_identifier = NA,
                         storage_folder = NA,
-                        study_country = NA,
-                        study_area = NA,
-                        species = NA,
                         type_of_sample = NA,
                         type_of_data = NA,
                         type_of_measure = NA,
                         repeated_measure = NA,
                         no_spec = NA,
                         no_ind = NA,
-                        data_from = NA,
-                        data_to = NA,
                         additional_info = NA,
                         publication = NA,
                         publication_doi = NA,
@@ -44,8 +46,6 @@ build_data_files <- function(data_name){
                         proc_data = NA,
                         cooperation = NA,
                         data_owner = NA,
-                        projection = NA,
-                        EPSG_code = NA,
                         data_type = NA)
 
   doit <- "Yes"
@@ -56,7 +56,7 @@ build_data_files <- function(data_name){
       dplyr::mutate(
         proj_name = data_name,
         proj_id = ifelse(is.na(data$proj_id), base::readline("project id:"), data$proj_id),
-        proj_editor = ifelse(is.na(data$proj_editor), base::readline("project editor:"), data$proj_editor),
+        proj_editor = unlist(stringi::stri_split(data_name, regex = "_"))[5],
         Dep = ifelse(is.na(data$Dep), fun_num("Department"), data$Dep),
         sup_vis = ifelse(is.na(data$sup_vis), base::readline("super visor:"), data$sup_vis),
         data_file_name = ifelse(is.na(data$data_file_name), base::readline("names of data files:"),data$data_file_name),
@@ -66,15 +66,15 @@ build_data_files <- function(data_name){
         storage_folder = "data-raw",
         study_country = ifelse(is.na(data$study_country), base::readline("study country:"), data$study_country),
         study_area = ifelse(is.na(data$study_area), base::tolower(base::readline("study area:")), data$study_area),
-        species = ifelse(is.na(data$species), base::tolower(base::readline("species:")), data$species),
+        species = unlist(stringi::stri_split(data_name, regex = "_"))[2],
         type_of_sample = ifelse(is.na(data$type_of_sample), base::readline("type of sample:"), data$type_of_sample),
         type_of_data = ifelse(is.na(data$type_of_data), base::readline("type of data:"), data$type_of_data),
         type_of_measure = ifelse(is.na(data$type_of_measure), base::readline("type of measure:"), data$type_of_measure),
         repeated_measure = c("yes", "no")[utils::menu(c("yes", "no"), title = "repeated measure?")],
         no_spec = ifelse(is.na(data$no_spec), fun_num("number of species"), data$no_spec),
         no_ind = ifelse(is.na(data$no_ind), fun_num("number of individuals"), data$no_ind),
-        data_from = ifelse(is.na(data$data_from), fun_date("from"), data$data_from),
-        data_to = ifelse(is.na(data$data_to), fun_date("to"), data$data_to),
+        data_from = min(data_sf$timestamp),
+        data_to = max(data_sf$timestamp),
         additional_info = ifelse(is.na(data$additional_info), base::readline("additional information:"), data$additional_info),
         publication = ifelse(is.na(data$publication), base::readline("publication name:"), data$publication),
         publication_doi = ifelse(is.na(data$publication_doi), base::readline("publication doi:"), data$publication_doi),
@@ -88,8 +88,8 @@ build_data_files <- function(data_name){
         proc_data = ifelse(is.na(data$proc_data), base::readline("processed data:"), data$proc_data),
         cooperation = ifelse(is.na(data$cooperation), base::readline("cooperation:"), data$cooperation),
         data_owner = ifelse(is.na(data$data_owner), base::readline("data owner:"), data$data_owner),
-        projection = ifelse(is.na(data$projection), base::readline("projection name:"), data$projection),
-        EPSG_code = ifelse(is.na(data$EPSG_code), fun_epsg(), data$EPSG_code),
+        projection = sf::st_crs(data_sf)$proj4string,
+        EPSG_code = sf::st_crs(data_sf)$epsg,
         data_type = ifelse(is.na(data$data_type), base::readline("data type ending:"), data$data_type)
       ) %>%
       dplyr::mutate_each(dplyr::funs(empty_as_na))
@@ -104,23 +104,8 @@ openxlsx::write.xlsx(x = data, file = here::here("data-raw", data$proj_name, pas
 return(data)
 }
 
-#' function for dates
-#' @param x input
-#' @return returns a date
-#' @examples
-#' \dontrun{
-#' fun_date("2017-01-01")
-#' }
 
-# function for dates
-fun_date <- function(x){
-  date_in <- base::readline(base::paste0("enter date ", x,": "))
-  while(base::class(try(assertthat::is.date(base::as.Date(date_in)), silent = TRUE)) == "try-error"){
-    print("wrong format. Enter date as following: 2017-01-01")
-    date_in <- base::readline(base::paste0("enter date ", x,": "))
-  }
-  return(date_in)
-}
+
 
 
 #' function for numeric
@@ -134,10 +119,6 @@ fun_date <- function(x){
 # function for numeric
 fun_num <- function(x){
   num_in <- base::readline(paste0(x, ": "))
-  while(is.na(suppressWarnings(base::as.numeric(num_in)))){
-    print("wrong format. Enter a numeric value")
-    num_in <- base::readline(paste0(x, ": "))
-  }
   return(num_in)
 }
 
