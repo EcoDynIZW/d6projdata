@@ -26,4 +26,5 @@ Imports:
     gt,
     glue,
     tidyr,
-    flextable
+    flextable,
+    openxlsx
