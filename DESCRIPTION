@@ -17,7 +17,6 @@ Imports:
     assertthat,
     magrittr,
     lubridate,
-    xlsx,
     base,
     utils,
     ggplot2,

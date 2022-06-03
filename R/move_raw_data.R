@@ -1,4 +1,4 @@
-#' move raw data from any directoy to the _archive folder.
+#' move raw data from any directory to the _archive folder.
 #' @param data_name column of the taxon name
 #' @param data_path complete path to the raw data with the file itself
 #' @export

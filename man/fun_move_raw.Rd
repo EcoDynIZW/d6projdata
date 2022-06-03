@@ -2,7 +2,7 @@
 % Please edit documentation in R/move_raw_data.R
 \name{fun_move_raw}
 \alias{fun_move_raw}
-\title{move raw data from any directoy to the _archive folder.}
+\title{move raw data from any directory to the _archive folder.}
 \usage{
 fun_move_raw(data_name, data_path)
 }
@@ -12,7 +12,7 @@ fun_move_raw(data_name, data_path)
 \item{data_path}{complete path to the raw data with the file itself}
 }
 \description{
-move raw data from any directoy to the _archive folder.
+move raw data from any directory to the _archive folder.
 }
 \examples{
 \dontrun{

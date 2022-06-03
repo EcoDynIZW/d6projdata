@@ -4,7 +4,10 @@
 \alias{proj_data_name}
 \title{create name of proj data files}
 \usage{
-proj_data_name(data)
+proj_data_name(x)
+}
+\arguments{
+\item{x}{dataframe or sf object}
 }
 \value{
 a data name in a given format
@@ -14,6 +17,6 @@ create name of proj data files
 }
 \examples{
 \dontrun{
-proj_data_name()
+proj_data_name(data)
 }
 }
