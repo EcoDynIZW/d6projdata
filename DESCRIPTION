@@ -28,4 +28,5 @@ Imports:
     flextable,
     openxlsx,
     rmarkdown,
-    stringi
+    stringi,
+    janitor
