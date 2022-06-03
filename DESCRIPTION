@@ -27,4 +27,6 @@ Imports:
     glue,
     tidyr,
     flextable,
-    openxlsx
+    openxlsx,
+    rmarkdown,
+    stringi

@@ -1,5 +1,5 @@
 #' create name of proj data files
-#' @data dataframe or sf object
+#' @param data dataframe or sf object
 #' @return a data name in a given format
 #' @export
 #' @examples

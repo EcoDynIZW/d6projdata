@@ -17,27 +17,27 @@ std_raw_data <- function(taxon_col, data_path){
                     base::list.files(path = here::here("data-raw"),
                                      pattern = stud_spec), "_archive")
 
-  files <- lapply(list.files(dir, pattern = ".csv", recursive = TRUE, full.names = TRUE), read.csv)
+  files <- lapply(list.files(dir, pattern = ".csv", recursive = TRUE, full.names = TRUE), utils::read.csv)
 
   files_new_gps <- lapply(files, function(x){
     data <- x %>%
-      drop_na(as.character(names(x)[utils::menu(names(x),
+      tidyr::drop_na(as.character(names(x)[utils::menu(names(x),
                                                 title = "choose x")])) %>%
-      st_as_sf(coords = c(as.character(names(x)[utils::menu(names(x),
+      sf::st_as_sf(coords = c(as.character(names(x)[utils::menu(names(x),
                                                             title = "choose x")]),
                           as.character(names(x)[utils::menu(names(x),
                                                             title = "choose y")])),
                crs = as.numeric(fun_epsg()),
                sf_column_name = "geometry") %>% # add search for x and y column
       sf::st_transform(4326) %>%
-      dplyr::mutate(x_4326 = sf::st_coordinates(.)[,1],
-                    y_4326 = sf::st_coordinates(.)[,2]) %>%
+      dplyr::mutate(x_4326 = sf::st_coordinates()[,1],
+                    y_4326 = sf::st_coordinates()[,2]) %>%
       sf::st_transform(3035) %>%
-      dplyr::mutate(x_3035 = sf::st_coordinates(.)[,1],
-                    y_3035 = sf::st_coordinates(.)[,2]) %>%
+      dplyr::mutate(x_3035 = sf::st_coordinates()[,1],
+                    y_3035 = sf::st_coordinates()[,2]) %>%
       sf::st_transform(25833) %>%
-      dplyr::mutate(x_25833 = sf::st_coordinates(.)[,1],
-                    y_25833 = sf::st_coordinates(.)[,2])
+      dplyr::mutate(x_25833 = sf::st_coordinates()[,1],
+                    y_25833 = sf::st_coordinates()[,2])
 
   })
 
