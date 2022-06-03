@@ -73,8 +73,8 @@ build_data_files <- function(data_name, data_sf){
         repeated_measure = c("yes", "no")[utils::menu(c("yes", "no"), title = "repeated measure?")],
         no_spec = ifelse(is.na(data$no_spec), fun_num("number of species"), data$no_spec),
         no_ind = ifelse(is.na(data$no_ind), fun_num("number of individuals"), data$no_ind),
-        data_from = min(data_sf$timestamp, na.rm = TRUE),
-        data_to = max(data_sf$timestamp, na.rm = TRUE),
+        data_from = as.character(min(data_sf$timestamp, na.rm = TRUE)),
+        data_to = as.character(max(data_sf$timestamp, na.rm = TRUE)),
         additional_info = ifelse(is.na(data$additional_info), base::readline("additional information:"), data$additional_info),
         publication = ifelse(is.na(data$publication), base::readline("publication name:"), data$publication),
         publication_doi = ifelse(is.na(data$publication_doi), base::readline("publication doi:"), data$publication_doi),
@@ -89,7 +89,7 @@ build_data_files <- function(data_name, data_sf){
         cooperation = ifelse(is.na(data$cooperation), base::readline("cooperation:"), data$cooperation),
         data_owner = ifelse(is.na(data$data_owner), base::readline("data owner:"), data$data_owner),
         projection = sf::st_crs(data_sf)$proj4string,
-        EPSG_code = sf::st_crs(data_sf)$epsg,
+        EPSG_code = as.character(sf::st_crs(data_sf)$epsg),
         data_type = ifelse(is.na(data$data_type), base::readline("data type ending:"), data$data_type)
       ) %>%
       dplyr::mutate_each(dplyr::funs(empty_as_na))
