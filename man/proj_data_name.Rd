@@ -4,7 +4,7 @@
 \alias{proj_data_name}
 \title{create name of proj data files}
 \usage{
-proj_data_name()
+proj_data_name(data)
 }
 \value{
 a data name in a given format

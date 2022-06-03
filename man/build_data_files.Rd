@@ -4,12 +4,12 @@
 \alias{build_data_files}
 \title{create xlsx for the project data.}
 \usage{
-build_data_files(path, data_name)
+build_data_files(data_name, data_sf)
 }
 \arguments{
-\item{path}{The path where the data has to be stored}
-
 \item{data_name}{the name of the project}
+
+\item{data_sf}{sf object}
 }
 \value{
 a tibble where you have to set the parameters by hand.

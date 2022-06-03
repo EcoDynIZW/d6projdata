@@ -1,5 +1,6 @@
 #' create xlsx for the project data.
 #' @param data_name the name of the project
+#' @param data_sf sf object
 #' @return a tibble where you have to set the parameters by hand.
 #' @export
 #' @examples
@@ -63,7 +64,6 @@ build_data_files <- function(data_name, data_sf){
         data_name_archive = ifelse(is.na(data$data_name_archive), base::readline("original names of data files in archive:"), data$data_name_archive),
         edited_unique_identifier = ifelse(is.na(data$edited_unique_identifier), base::readline("edited unique identifier:"), data$edited_unique_identifier),
         original_unique_identifier = ifelse(is.na(data$original_unique_identifier), base::readline("original unique identifier:"), data$original_unique_identifier),
-        storage_folder = "data-raw",
         study_country = ifelse(is.na(data$study_country), base::readline("study country:"), data$study_country),
         study_area = ifelse(is.na(data$study_area), base::tolower(base::readline("study area:")), data$study_area),
         species = unlist(stringi::stri_split(data_name, regex = "_"))[2],
