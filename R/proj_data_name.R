@@ -8,7 +8,7 @@
 #' }
 
 proj_data_name <- function(data){
-  base::paste(lubridate::year(min(data$timestamp)),
+  base::paste(lubridate::year(min(data$timestamp, na.rm = TRUE)),
     base::gsub(" ", "-", base::readline("species:")),
     base::readline("country short:"),
     base::readline("type of data:"),
