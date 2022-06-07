@@ -33,49 +33,51 @@ sapply(list("sf", "tidyverse", "raster", "here", "ggplot2", "patchwork", "d6proj
 # Data
 
 ```{r data}
-data_name <- d6projdata::proj_data_name()
+data <- st_read()
 
-if(!base::file.exists(here::here("data-raw", data_name))){ # creates new folder per layer
-    base::dir.create(here::here("data-raw", data_name))
-  }
+data_name <- d6projdata::proj_data_name(data = data)
 
-data <- st_read(list.files(here::here("data-raw", ""), pattern = ".$", recursive = TRUE, full.names = TRUE)[[1]]) %>% 
-  
+if(!base::dir.exists(paths = here::here("data-raw", data_name))){
+    base::dir.create(path = here::here("data-raw", data_name),
+                     showWarnings = TRUE,
+                     recursive = TRUE)}
+
 names(data)
 nrow(data)
 
 head(data, 10)
-#min(data$timestamp)
-#max(data$timestamp)
-
-mapview(data[1,])
+min(data$timestamp, na.rm = TRUE)
+max(data$timestamp, na.rm = TRUE)
 ```
 
 # create proj data file
 
 ```{r}
-proj_data <- d6projdata::build_data_files(path = "data-raw")
-# proj_data <- readxl::read_xlsx(here::here("data-raw", ""))
+proj_data <- d6projdata::build_data_files(data_name = data_name, data_sf = data)
 ```
 
 # move data
 
 ```{r}
-d6projdata::fun_move_raw(taxon_col = "", # maybe change to another column or type by hand
-                         data_path = list.files(here::here("data-raw", ""), pattern = ".$", recursive = TRUE, full.names = TRUE)[[1]])
+d6projdata::fun_move_raw(data_name = data_name,
+                         data_path = here(
+    "data-raw", "unsortiert"))
 ```
 
 # save data
 
 ```{r}
-st_write(data, here::here("data-raw", data_name, paste0(data_name, ".gpkg")))
+st_write(data, here::here("data-raw", data_name, paste0(data_name, ".")))
 ```
 
 # render data
 
 ```{r}
-d6projdata:::render_projdata(path = here::here("data-raw", data_name),
-                data_name = data_name,
-                data_sf = data,
-                proj_data = proj_data)
+d6projdata:::render_projdata(
+  path = here::here("data-raw",
+                    data_name),
+  data_name = data_name,
+  data_sf = data,
+  proj_data = proj_data
+)
 ```
