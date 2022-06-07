@@ -35,7 +35,7 @@ sapply(list("sf", "tidyverse", "raster", "here", "ggplot2", "patchwork", "d6proj
 ```{r data}
 data <- st_read()
 
-data_name <- d6projdata::proj_data_name(data = data)
+data_name <- d6projdata::proj_data_name(x = data)
 
 if(!base::dir.exists(paths = here::here("data-raw", data_name))){
     base::dir.create(path = here::here("data-raw", data_name),
