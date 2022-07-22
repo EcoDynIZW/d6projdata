@@ -54,6 +54,12 @@ max(data$timestamp, na.rm = TRUE)
 
 ```{r}
 proj_data <- d6projdata::build_data_files(data_name = data_name, data_sf = data)
+
+proj_data <- readxl::read_xlsx(here::here("data-raw", data_name, paste0("meta_data_", data_name, ".xlsx"))) %>% 
+  mutate(data_from = as.character(min(as.Date(data_from, 
+            origin = "1970-01-01"))),
+         data_to = as.character(max(as.Date(data_to, 
+            origin = "1970-01-01"))))
 ```
 
 # move data
