@@ -21,7 +21,6 @@ build_data_ras <- function(data_name, data_ras){
                         species = NA,
                         study_country = NA,
                         study_area = NA,
-                        EPSG_code = NA,
                         projection = NA,
                         data_from = NA,
                         data_to = NA,
@@ -86,8 +85,7 @@ build_data_ras <- function(data_name, data_ras){
         proc_data = ifelse(is.na(data$proc_data), base::readline("processed data:"), data$proc_data),
         cooperation = ifelse(is.na(data$cooperation), base::readline("cooperation:"), data$cooperation),
         data_owner = ifelse(is.na(data$data_owner), base::readline("data owner:"), data$data_owner),
-        projection = terra::crs(data_ras)$proj4string,
-        EPSG_code = as.character(terra::crs(data_ras)$epsg),
+        projection = terra::crs(data_ras, proj = TRUE),
         data_type = ifelse(is.na(data$data_type), base::readline("data type ending:"), data$data_type)
       ) %>%
       dplyr::mutate_each(dplyr::funs(empty_as_na))
