@@ -2,6 +2,7 @@
 
 export("%>%")
 export(build_data_files)
+export(build_data_ras)
 export(change_cols)
 export(fun_move_raw)
 export(proj_data_name)

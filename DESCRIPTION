@@ -11,7 +11,7 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.0
+RoxygenNote: 7.2.3
 Imports:
     dplyr,
     assertthat,
@@ -29,4 +29,5 @@ Imports:
     openxlsx,
     rmarkdown,
     stringi,
-    janitor
+    janitor,
+    terra
