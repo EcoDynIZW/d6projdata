@@ -1,0 +1,89 @@
+---
+title: "Your Project: Data Preparation" ## name of your project
+author: "Your Name"                     ## your name(s)
+date: "`r Sys.Date()`"                  ## current date
+
+output:
+  html_document:
+    theme: journal
+    highlight: kate
+    toc_depth: 2
+    toc_float: true
+    number_sections: true
+---
+
+```{r setup, include=FALSE}
+## You can ignore this chunk in most cases
+## If you want to modify chunk options, you can do it here for all chunks or
+## add the options in the repsective chunk header, e.g. `{r, message = FALSE}`
+knitr::opts_chunk$set(echo = TRUE, warning = TRUE, message = TRUE,
+                      fig.width = 9, fig.height = 6, dpi = 500, 
+                      retina = 1, fig.showtext = TRUE)
+```
+
+# Setup
+
+```{r packages}
+#devtools::install_github("EcoDynIZW/d6projdata")
+
+sapply(list("sf", "tidyverse", "terra", "here", "ggplot2", "patchwork", "d6projdata", "mapview", "cowplot"), 
+       library, character.only = TRUE, logical.return = TRUE)
+```
+
+# Data
+
+```{r data}
+data <- st_read()
+
+data_name <- d6projdata::proj_data_name(x = data)
+
+if(!base::dir.exists(paths = here::here("data-raw", data_name))){
+    base::dir.create(path = here::here("data-raw", data_name),
+                     showWarnings = TRUE,
+                     recursive = TRUE)}
+
+names(data)
+nrow(data)
+
+head(data, 10)
+min(data$timestamp, na.rm = TRUE)
+max(data$timestamp, na.rm = TRUE)
+```
+
+# create proj data file
+
+```{r}
+proj_data <- d6projdata::build_data_files(data_name = data_name, data_sf = data)
+
+proj_data <- readxl::read_xlsx(here::here("data-raw", data_name, paste0("meta_data_", data_name, ".xlsx"))) %>% 
+  mutate(data_from = as.character(min(as.Date(data_from, 
+            origin = "1970-01-01"))),
+         data_to = as.character(max(as.Date(data_to, 
+            origin = "1970-01-01"))))
+```
+
+# move data
+
+```{r}
+d6projdata::fun_move_raw(data_name = data_name,
+                         data_path = here(
+    "data-raw", "unsortiert"))
+```
+
+# save data
+
+```{r}
+st_write(data, here::here("data-raw", data_name, paste0(data_name, ".")))
+```
+
+# render data
+
+```{r}
+d6projdata:::render_projdata(
+  path = here::here("data-raw",
+                    data_name),
+  data_name = data_name,
+  data_sf = data,
+  proj_data = proj_data
+)
+```
