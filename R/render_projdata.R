@@ -3,6 +3,7 @@
 #' @param data_name The name of the data
 #' @param data_sf sf object
 #' @param proj_data meta data file
+#' @param data_plot data for plotting
 #' @return a tibble where you have to set the parameters by hand.
 #' @export
 #' @examples
@@ -11,7 +12,7 @@
 #' }
 
 render_projdata <-
-  function(path, data_name, data_sf, proj_data) {
+  function(path, data_name, data_sf, data_plot, proj_data) {
     rmarkdown::render(here::here("R", "projdata_template_html.Rmd"),
                       output_format = "html_document",
                       output_dir = path,

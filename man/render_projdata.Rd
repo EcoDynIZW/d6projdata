@@ -4,7 +4,7 @@
 \alias{render_projdata}
 \title{function for rendering an markdown to get an html of the project data}
 \usage{
-render_projdata(path, data_name, data_sf, proj_data)
+render_projdata(path, data_name, data_sf, data_plot, proj_data)
 }
 \arguments{
 \item{path}{The path where the data has to be stored}
@@ -12,6 +12,8 @@ render_projdata(path, data_name, data_sf, proj_data)
 \item{data_name}{The name of the data}
 
 \item{data_sf}{sf object}
+
+\item{data_plot}{data for plotting}
 
 \item{proj_data}{meta data file}
 }
