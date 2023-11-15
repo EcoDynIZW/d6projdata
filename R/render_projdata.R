@@ -4,6 +4,7 @@
 #' @param data_sf sf object
 #' @param proj_data meta data file
 #' @param data_plot data for plotting
+#' @param id_col id column for plotting
 #' @return a tibble where you have to set the parameters by hand.
 #' @export
 #' @examples

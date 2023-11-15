@@ -16,6 +16,8 @@ render_projdata(path, data_name, data_sf, data_plot, proj_data)
 \item{data_plot}{data for plotting}
 
 \item{proj_data}{meta data file}
+
+\item{id_col}{id column for plotting}
 }
 \value{
 a tibble where you have to set the parameters by hand.
