@@ -1,7 +1,7 @@
 #' function for creating the mcp of telemetry data
 #' @param xy sf data
 #' @param percent percentage of mcp. default 100%
-#' @return mcps for all individuals
+#' @return mcps for all individuals in 4326
 #' @export
 #' @examples
 #' \dontrun{
@@ -9,7 +9,7 @@
 #' }
 
 calc_mcp <- function (xy, percent = 100) {
-
+  xy      <- sf::st_transform(xy, 4326)
   id      <- xy[[1]]
   id      <- factor(id)
   xy      <- as.data.frame(sf::st_coordinates(xy))

@@ -12,7 +12,7 @@ calc_mcp(xy, percent = 100)
 \item{percent}{percentage of mcp. default 100\%}
 }
 \value{
-mcps for all individuals
+mcps for all individuals in 4326
 }
 \description{
 function for creating the mcp of telemetry data
