@@ -31,7 +31,8 @@ map_layers <- function(x, id_col) {
     for (i in k) {
       map <- map |>
         leaflet::addPolygons(
-          data = x |> dplyr::filter(id == i), group = as.character(i)
+          data = x |> dplyr::filter(id == i), group = as.character(i),
+          popup = leafpop::popupTable(x)
         )
     }
   }
@@ -41,7 +42,8 @@ map_layers <- function(x, id_col) {
     for (i in k) {
       map <- map  |>
         leaflet::addPolylines(
-          data = x |> dplyr::filter(id == i), group = as.character(i)
+          data = x |> dplyr::filter(id == i), group = as.character(i),
+          popup = leafpop::popupTable(x)
         )
     }
   }
@@ -51,7 +53,8 @@ map_layers <- function(x, id_col) {
     for (i in k) {
       map <- map |>
         leaflet::addCircleMarkers(
-          data = x |> dplyr::filter(id == i), group = as.character(i)
+          data = x |> dplyr::filter(id == i), group = as.character(i),
+          popup = leafpop::popupTable(x)
         )
     }
   }
