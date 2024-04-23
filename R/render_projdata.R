@@ -13,7 +13,7 @@
 #' }
 
 render_projdata <-
-  function(path, data_name, data_sf, data_plot, proj_data) {
+  function(path, data_name, data_sf, data_plot, proj_data, id_col) {
     rmarkdown::render(here::here("R", "projdata_template_html.Rmd"),
                       output_format = "html_document",
                       output_dir = path,
