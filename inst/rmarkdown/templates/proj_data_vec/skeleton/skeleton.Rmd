@@ -84,6 +84,7 @@ d6projdata:::render_projdata(
                     data_name),
   data_name = data_name,
   data_sf = data,
-  proj_data = proj_data
+  proj_data = proj_data,
+  id_col = ""
 )
 ```

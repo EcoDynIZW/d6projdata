@@ -76,6 +76,7 @@ d6projdata::render_projdata_ras(
                     data_name),
   data_name = data_name,
   data_ras = data_plot,
-  proj_data = proj_data
+  proj_data = proj_data,
+  id_col = ""
 )
 ```
