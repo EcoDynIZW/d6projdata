@@ -14,9 +14,6 @@ map_layers <- function(x, id_col) {
 
   x <- x |> sf::st_transform(4326)
 
-  #number of groups
-  k <- unique(x$id)
-
   # get geometry type
   type <- unique(sf::st_geometry_type(x)) |> droplevels()
 
@@ -28,42 +25,118 @@ map_layers <- function(x, id_col) {
 
   # polygons
   if(type %in% c("POLYGON", "MULTIPOLYGON")){
-    for (i in k) {
+    map <- map |>
+      addPolygons(
+        data = x,
+        group = "All",
+        popup = popupTable(x)
+      )
+
+    for (i in unique(x$id)) {
       map <- map |>
         leaflet::addPolygons(
-          data = x |> dplyr::filter(id == i), group = as.character(i),
-          popup = leafpop::popupTable(x)
+          data = x |> dplyr::filter(id == i),
+          group = as.character(i),
+          popup = leafpop::popupTable(x |> filter(id == i))
         )
     }
   }
 
   # lines
   if(type %in% c("LINESTRING", "MULTILINESTRING")){
-    for (i in k) {
-      map <- map  |>
+    map <- map |>
+      addPolylines(
+        data = x,
+        group = "All",
+        popup = popupTable(x)
+      )
+
+
+    for (i in unique(x$id)) {
+      map <- map |>
         leaflet::addPolylines(
-          data = x |> dplyr::filter(id == i), group = as.character(i),
-          popup = leafpop::popupTable(x)
+          data = x |> filter(id == i),
+          group = as.character(i),
+          popup = leafpop::popupTable(x |> filter(id == i))
         )
     }
   }
 
   # points
   if(type %in% c("POINT", "MULTIPOINT")){
-    for (i in k) {
+    map <- map |>
+      addCircleMarkers(
+        data = x,
+        group = "All",
+        popup = popupTable(x)
+      )
+
+    for (i in unique(x$id)) {
       map <- map |>
-        leaflet::addCircleMarkers(
-          data = x |> dplyr::filter(id == i), group = as.character(i),
-          popup = leafpop::popupTable(x)
+        addCircleMarkers(
+          data = x |> filter(id == i),
+          group = as.character(i),
+          popup = popupTable(x |> filter(id == i))
         )
     }
   }
 
-  #create layer control
-  map |>
-    leaflet::addLayersControl(
-      overlayGroups = k,
-      options = leaflet::layersControlOptions(collapsed = FALSE)) |>
-    leaflet:: hideGroup(k[-1]) #hide all groups except the 1st one
+
+  # Add layers control with both individual groups and the "all groups" option
+  map <- map |>
+    addLayersControl(
+      overlayGroups = c("All", as.character(unique(x$id))),
+      options = layersControlOptions(collapsed = TRUE)
+    ) |>
+    hideGroup(as.character(unique(x$id)))
+
+  # Add custom JavaScript to handle the toggling and move the "All" button to the top
+  map <- map |>
+    htmlwidgets::onRender("
+    function(el, x) {
+      // Move the 'All' checkbox to the top of the layers control
+      var controlContainer = document.querySelector('.leaflet-control-layers-overlays');
+      var allGroupDiv = Array.from(controlContainer.children).find(function(div) {
+        return div.innerText.includes('All');
+      });
+
+      if (allGroupDiv) {
+        controlContainer.insertBefore(allGroupDiv, controlContainer.firstChild);
+      }
+
+      // Find the 'All' checkbox and all individual checkboxes
+      var allCheckbox = document.querySelector('input[name=\"All\"]');
+      var individualCheckboxes = [];
+
+      document.querySelectorAll('input[type=\"checkbox\"]').forEach(function(checkbox) {
+        if (checkbox.name !== 'All') {
+          individualCheckboxes.push(checkbox);
+        }
+      });
+
+      // Add change event to 'All' checkbox to toggle all individual checkboxes
+      allCheckbox.addEventListener('change', function() {
+        var checked = this.checked;
+        individualCheckboxes.forEach(function(checkbox) {
+          checkbox.checked = checked;
+          var event = new Event('input', { bubbles: true });
+          checkbox.dispatchEvent(event);
+        });
+      });
+
+      // Add change event to individual checkboxes to sync 'All' checkbox
+      individualCheckboxes.forEach(function(checkbox) {
+        checkbox.addEventListener('change', function() {
+          var allChecked = individualCheckboxes.every(function(checkbox) {
+            return checkbox.checked;
+          });
+          allCheckbox.checked = allChecked;
+        });
+      });
+    }
+  ")
+
+  # Display the map
+  map
 
 }
