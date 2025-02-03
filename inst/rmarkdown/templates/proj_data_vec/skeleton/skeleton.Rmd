@@ -83,7 +83,8 @@ d6projdata:::render_projdata(
   path = here::here("data-raw",
                     data_name),
   data_name = data_name,
-  data_sf = data,
+  data_sf = data_sf,
+  data = data,
   proj_data = proj_data,
   id_col = ""
 )

@@ -4,6 +4,7 @@
 #' @param data_sf sf object
 #' @param proj_data meta data file
 #' @param data_plot data for plotting
+#' @param data data for table
 #' @param id_col id column for plotting
 #' @return a tibble where you have to set the parameters by hand.
 #' @export
@@ -13,7 +14,7 @@
 #' }
 
 render_projdata <-
-  function(path, data_name, data_sf, data_plot, proj_data, id_col) {
+  function(path, data_name, data_sf, data_plot, proj_data, id_col, data) {
     rmarkdown::render(here::here("R", "projdata_template_html.Rmd"),
                       output_format = "html_document",
                       output_dir = path,

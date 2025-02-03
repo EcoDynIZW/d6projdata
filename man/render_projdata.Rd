@@ -4,7 +4,7 @@
 \alias{render_projdata}
 \title{function for rendering an markdown to get an html of the project data}
 \usage{
-render_projdata(path, data_name, data_sf, data_plot, proj_data, id_col)
+render_projdata(path, data_name, data_sf, data_plot, proj_data, id_col, data)
 }
 \arguments{
 \item{path}{The path where the data has to be stored}
@@ -18,6 +18,8 @@ render_projdata(path, data_name, data_sf, data_plot, proj_data, id_col)
 \item{proj_data}{meta data file}
 
 \item{id_col}{id column for plotting}
+
+\item{data}{data for table}
 }
 \value{
 a tibble where you have to set the parameters by hand.
