@@ -26,10 +26,10 @@ map_layers <- function(x, id_col) {
   # polygons
   if(type %in% c("POLYGON", "MULTIPOLYGON")){
     map <- map |>
-      addPolygons(
+      leaflet::addPolygons(
         data = x,
         group = "All",
-        popup = popupTable(x)
+        popup = leafpop::popupTable(x)
       )
 
     for (i in unique(x$id)) {
@@ -45,10 +45,10 @@ map_layers <- function(x, id_col) {
   # lines
   if(type %in% c("LINESTRING", "MULTILINESTRING")){
     map <- map |>
-      addPolylines(
+      leaflet::addPolylines(
         data = x,
         group = "All",
-        popup = popupTable(x)
+        popup = leafpop::popupTable(x)
       )
 
 
@@ -65,18 +65,18 @@ map_layers <- function(x, id_col) {
   # points
   if(type %in% c("POINT", "MULTIPOINT")){
     map <- map |>
-      addCircleMarkers(
+      leaflet::addCircleMarkers(
         data = x,
         group = "All",
-        popup = popupTable(x)
+        popup = leafpop::popupTable(x)
       )
 
     for (i in unique(x$id)) {
       map <- map |>
-        addCircleMarkers(
+        leaflet::addCircleMarkers(
           data = x |> filter(id == i),
           group = as.character(i),
-          popup = popupTable(x |> filter(id == i))
+          popup = leafpop::popupTable(x |> filter(id == i))
         )
     }
   }
@@ -84,11 +84,11 @@ map_layers <- function(x, id_col) {
 
   # Add layers control with both individual groups and the "all groups" option
   map <- map |>
-    addLayersControl(
+    leaflet::addLayersControl(
       overlayGroups = c("All", as.character(unique(x$id))),
-      options = layersControlOptions(collapsed = TRUE)
+      options = leaflet::layersControlOptions(collapsed = TRUE)
     ) |>
-    hideGroup(as.character(unique(x$id)))
+    leaflet::hideGroup(as.character(unique(x$id)))
 
   # Add custom JavaScript to handle the toggling and move the "All" button to the top
   map <- map |>
