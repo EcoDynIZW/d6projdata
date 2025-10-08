@@ -85,10 +85,10 @@ map_layers <- function(x, id_col) {
   # Add layers control with both individual groups and the "all groups" option
   map <- map |>
     leaflet::addLayersControl(
-      overlayGroups = c("All", as.character(unique(x$id_col))),
+      overlayGroups = c("All", as.character(unique(x$id))),
       options = leaflet::layersControlOptions(collapsed = TRUE)
     ) |>
-    leaflet::hideGroup(as.character(unique(x$id_col)))
+    leaflet::hideGroup(as.character(unique(x$id)))
 
   # Add custom JavaScript to handle the toggling and move the "All" button to the top
   map <- map |>
