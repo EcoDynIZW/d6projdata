@@ -13,8 +13,8 @@ std_raw_data <- function(taxon_col, data_path){
                           replacement = "_",
                           x = base::tolower(taxon_col))
 
-  dir <- here::here("data-raw",
-                    base::list.files(path = here::here("data-raw"),
+  dir <- here::here("data",
+                    base::list.files(path = here::here("data"),
                                      pattern = stud_spec), "_archive")
 
   files <- lapply(list.files(dir, pattern = ".csv", recursive = TRUE, full.names = TRUE), utils::read.csv)

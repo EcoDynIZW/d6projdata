@@ -37,8 +37,8 @@ data <- rast()
 
 data_name <- d6projdata::proj_data_name(x = data)
 
-if(!base::dir.exists(paths = here::here("data-raw", data_name))){
-    base::dir.create(path = here::here("data-raw", data_name),
+if(!base::dir.exists(paths = here::here("data", data_name))){
+    base::dir.create(path = here::here("data", data_name),
                      showWarnings = TRUE,
                      recursive = TRUE)}
 
@@ -49,7 +49,7 @@ if(!base::dir.exists(paths = here::here("data-raw", data_name))){
 ```{r}
 proj_data <- d6projdata::build_data_ras(data_name = data_name, data_ras = data)
 
-proj_data <- readxl::read_xlsx(here::here("data-raw", data_name, paste0("meta_data_", data_name, ".xlsx")))
+proj_data <- readxl::read_xlsx(here::here("data", data_name, paste0("meta_data_", data_name, ".xlsx")))
 ```
 
 # move data
@@ -57,13 +57,13 @@ proj_data <- readxl::read_xlsx(here::here("data-raw", data_name, paste0("meta_da
 ```{r}
 d6projdata::fun_move_raw(data_name = data_name,
                          data_path = here(
-    "data-raw", "unsortiert"))
+    "data", "unsortiert"))
 ```
 
 # save data
 
 ```{r}
-writeRaster(data, here::here("data-raw", data_name, "processed", paste0(data_name, ".tif")))
+writeRaster(data, here::here("data", data_name, "processed", paste0(data_name, ".tif")))
 ```
 
 # render data
@@ -72,7 +72,7 @@ writeRaster(data, here::here("data-raw", data_name, "processed", paste0(data_nam
 data_plot <- data |> project("epsg:4326")
 
 d6projdata::render_projdata_ras(
-  path = here::here("data-raw",
+  path = here::here("data",
                     data_name),
   data_name = data_name,
   data_ras = data_plot,
