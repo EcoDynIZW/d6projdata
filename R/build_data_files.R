@@ -99,7 +99,7 @@ build_data_files <- function(data_name, data_sf){
   }
 
 
-openxlsx::write.xlsx(x = data, file = here::here("data-raw", data$proj_name, paste0("meta_data_", data$proj_name, ".xlsx")),
+openxlsx::write.xlsx(x = data, file = here::here("data", data$proj_name, paste0("meta_data_", data$proj_name, ".xlsx")),
                      overwrite = TRUE)
 return(data)
 }

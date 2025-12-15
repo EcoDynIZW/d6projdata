@@ -9,12 +9,12 @@
 
 fun_move_raw <- function(data_name, data_path){
 
-  if(!base::dir.exists(paths = here::here("data-raw", data_name, "/_archive")))
-    base::dir.create(path = here::here("data-raw", data_name, "/_archive"),
+  if(!base::dir.exists(paths = here::here("data", data_name, "/_archive")))
+    base::dir.create(path = here::here("data", data_name, "/_archive"),
                      showWarnings = TRUE,
                      recursive = TRUE)
 
   base::file.copy(from = data_path,
-                  to = here::here("data-raw", data_name, "/_archive"))
+                  to = here::here("data", data_name, "/_archive"))
 
 }
