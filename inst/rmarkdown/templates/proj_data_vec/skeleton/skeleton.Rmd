@@ -73,7 +73,8 @@ d6projdata::fun_move_raw(data_name = data_name,
 # save data
 
 ```{r}
-st_write(data, here::here("data", data_name, paste0(data_name, ".")))
+st_write(data_sf, here::here("data", data_name, paste0(data_name, ".gpkg")))
+write.csv(data_sf %>% st_drop_geometry(), here::here("data", data_name, paste0(data_name, ".csv")))
 ```
 
 # render data
