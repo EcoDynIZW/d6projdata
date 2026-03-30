@@ -53,7 +53,52 @@ max(data$timestamp, na.rm = TRUE)
 # create proj data file
 
 ```{r}
-proj_data <- d6projdata::build_data_files(data_name = data_name, data_sf = data)
+proj_data <- tibble(proj_name = data_name, 
+      proj_id = NA,
+      Dep = NA,
+      sup_vis = NA,
+      data_file_name = NA,
+      data_name_archive = NA,
+      edited_unique_identifier = NA,
+      original_unique_identifier = NA,
+      study_country = NA,
+      study_area = NA,
+      species =NA,
+      type_of_sample = NA,
+      type_of_data = NA,
+      type_of_measure = NA,
+      repeated_measure = c("yes", "no")[utils::menu(c("yes", 
+        "no"), title = "repeated measure?")], 
+      no_spec = NA,
+      no_ind = NA,
+      data_from = min(as.Date(data_sf$timestamp, 
+        origin = "1970-01-01"), na.rm = TRUE), 
+      data_to = max(as.Date(data_sf$timestamp, 
+        origin = "1970-01-01"), na.rm = TRUE), 
+      additional_info = NA,
+      publication = NA,
+      publication_doi = NA,
+      metadata_description = NA,
+      temporal_resolution_sec = NA,
+      temporal_resolution_min = NA,
+      IZW_archive_path = NA,
+      IZW_data_path = NA,
+      external_archives = NA,
+      movebank_id = NA,
+      tva_number = NA,
+      euromammal_id = NA,
+      sample_data = NA,
+      proc_data = NA,
+      cooperation = NA,
+      data_owner = NA,
+      projection = sf::st_crs(data_sf)$proj4string, 
+      EPSG_code = as.character(sf::st_crs(data_sf)$epsg), 
+      data_type = NA)
+
+
+openxlsx::write.xlsx(x = proj_data, file = here::here("data", 
+    proj_data$proj_name, paste0("meta_data_", proj_data$proj_name, 
+      ".xlsx")), overwrite = TRUE)
 
 proj_data <- readxl::read_xlsx(here::here("data", data_name, paste0("meta_data_", data_name, ".xlsx"))) %>% 
   mutate(data_from = as.character(min(as.Date(data_from, 
