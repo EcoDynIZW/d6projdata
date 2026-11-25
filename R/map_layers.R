@@ -19,7 +19,7 @@ map_layers <- function(x, id_col) {
 
   #base map
   map <- leaflet::leaflet() |>
-    leaflet::addProviderTiles(leaflet::providers$CartoDB.Positron)
+    leaflet::addProviderTiles(leaflet::providers$OpenStreetMap)
 
   #loop through all groups and add a layer one at a time
 
